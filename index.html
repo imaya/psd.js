@@ -9,6 +9,40 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>psd.js</title>
+
+    <script src="https://raw.github.com/imaya/psd.js/master/bin/psd.parser.min.js"></script>
+    <script>
+NodeList.prototype.forEach = Array.prototype.forEach;
+window.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('file').addEventListener('change', onFileSelected, false);
+
+  function onFileSelected(e) {
+    var file = document.getElementById("file").files[0];
+    var reader = new FileReader();
+
+    // remove all canvas
+    document.querySelectorAll('canvas').forEach(function(element) {
+      var parent = element.parentNode;
+      parent.removeChild(element);
+    });
+
+    reader.onload = function(e) {
+      var input = new Uint8Array(e.target.result);
+      var parser = new PSD.Parser(input);
+
+      parser.parse();
+
+      // image data
+      document.body.appendChild(parser.imageData.createCanvas(parser.header));
+
+      console.log("PSD.Parser:", parser);
+    };
+    reader.readAsArrayBuffer(file);
+
+    e.preventDefault();
+  }
+}, false);
+</script>
   </head>
 
   <body>
@@ -37,9 +71,10 @@
 
 <h3>demo</h3>
 
-<p></p>
+<div>
+  <input type="file" id="file" name="file" />
+</div>
 
-<div></div>
       </section>
     </div>
 
