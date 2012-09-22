@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', function() {
       parser.parse();
 
       // image data
-      document.body.appendChild(parser.imageData.createCanvas(parser.header));
+      document.getElementById('target').appendChild(parser.imageData.createCanvas(parser.header));
 
       console.log("PSD.Parser:", parser);
     };
@@ -74,6 +74,8 @@ window.addEventListener('DOMContentLoaded', function() {
 <div>
   <input type="file" id="file" name="file" />
 </div>
+
+<div id="target"></div>
 
       </section>
     </div>
