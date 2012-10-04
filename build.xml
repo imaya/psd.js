@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="project" default="all" >
-  <property name="level" value="ADVANCED_OPTIMIZATIONS"/>
-  <!--property name="level" value="LIBRARY_OPTIMIZATIONS"/-->
+  <!--property name="level" value="ADVANCED_OPTIMIZATIONS"/-->
+  <property name="level" value="LIBRARY_OPTIMIZATIONS"/>
   <property name="src" value="./src"/>
   <property name="def" value="./define"/>
   <property name="vendor" value="./vendor"/>
@@ -40,6 +40,7 @@
       <arg line="--output_wrapper='(function() {%output%}).call(this);'"/>
       <arg line="--summary_detail_level=3"/>
       <arg line="--language_in=ECMASCRIPT5_STRICT"/>
+      <arg line="--use_types_for_optimization"/>
       <arg line="--js_output_file=${outfile}.tmp"/>
       <arg line="--js=${closure_primitives}"/>
       <arg line="--js=${depend}"/>
