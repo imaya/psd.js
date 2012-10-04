@@ -1,5 +1,6 @@
 goog.provide('PSD.ChannelRAW');
 
+goog.require('PSD.ChannelImage');
 goog.require('PSD.StreamReader');
 goog.require('PSD.LayerRecord');
 
@@ -7,15 +8,17 @@ goog.scope(function() {
 
 /**
  * @constructor
+ * @extends {PSD.ChannelImage}
  */
 PSD.ChannelRAW = function() {
-  /** @type {!(Array.<number>|Uint8Array)} */
-  this.channel;
+  goog.base(this);
 };
+goog.inherits(PSD.ChannelRAW, PSD.ChannelImage);
 
 /**
  * @param {PSD.StreamReader} stream
  * @param {PSD.LayerRecord} layerRecord
+ * @param {number} length
  */
 PSD.ChannelRAW.prototype.parse = function(stream, layerRecord, length) {
   /** @type {number} */

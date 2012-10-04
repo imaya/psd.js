@@ -30,6 +30,11 @@ PSD.LayerBlendingRanges.prototype.parse = function(stream) {
   this.offset = stream.tell();
   this.length = stream.readUint32() + 4;
 
+  if (this.length === 4) {
+    window.console.log("skip: layer blending ranges(empty body)");
+    return;
+  }
+
   next = this.offset + this.length;
 
   this.black = stream.readUint16();

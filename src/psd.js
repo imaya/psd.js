@@ -59,9 +59,6 @@ PSD.Parser.prototype.parse = function() {
   this.imageResources.parse(stream);
   this.layerAndMaskInformation.parse(stream);
   this.imageData.parse(stream, this.header);
-
-  // image
-  this.imageData.createCanvas(this.header);
 };
 
 

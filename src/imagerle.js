@@ -2,18 +2,21 @@ goog.provide('PSD.ImageRLE');
 
 goog.require('PSD.StreamReader');
 goog.require('PSD.Header');
+goog.require('PSD.Image');
 
 goog.scope(function() {
 
 /**
  * @constructor
+ * @extends {PSD.Image}
  */
 PSD.ImageRLE = function() {
-  /** @type {Array} */
-  this.channel;
+  goog.base(this);
+
   /** @type {Array.<number>} */
   this.lineLength;
 };
+goog.inherits(PSD.ImageRLE, PSD.Image);
 
 /**
  * @param {PSD.StreamReader} stream
@@ -34,6 +37,10 @@ PSD.ImageRLE.prototype.parse = function(stream, header) {
   var height = header.rows;
   /** @type {number} */
   var channels = header.channels;
+  /** @type {number} */
+  var size;
+  /** @type {number} */
+  var pos;
 
   // line lengths
   for (i = 0; i < height * channels; ++i) {
@@ -43,10 +50,22 @@ PSD.ImageRLE.prototype.parse = function(stream, header) {
   // channel data
   for (channelIndex = 0; channelIndex < channels; ++channelIndex) {
     lines = [];
+    size = 0;
+
     for (i = 0; i < height; ++i) {
-      lines[i] = stream.readPackBits(lineLength[channelIndex * height + i]);
+      lines[i] = stream.readPackBits(lineLength[channelIndex * height + i] * (header.depth / 8));
+      size += lines[i].length;
     }
-    channel[channelIndex] = Array.prototype.concat.apply([], lines);
+    // concatenation
+    if (USE_TYPEDARRAY) {
+      channel[channelIndex] = new Uint8Array(size);
+      for (i = 0, pos = 0, height = lines.length; i < height; ++i) {
+        channel[channelIndex].set(lines[i], pos);
+        pos += lines[i].length;
+      }
+    } else {
+      channel[channelIndex] = Array.prototype.concat.apply([], lines);
+    }
   }
 };
 

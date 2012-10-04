@@ -34,6 +34,10 @@ PSD.LayerAndMaskInformation.prototype.parse = function(stream) {
   length = stream.readUint32();
   this.length = length + 4;
 
+  if (length === 0) {
+    window.console.log("skip: layer and mask information (empty body)");
+  }
+
   var pos = stream.tell() + length;
 
   // initialize

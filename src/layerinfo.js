@@ -51,7 +51,6 @@ PSD.LayerInfo.prototype.parse = function(stream) {
   for (i = 0, il = this.layerCount; i < il; ++i) {
     channelImageData = new PSD.ChannelImageData();
     channelImageData.parse(stream, this.layerRecord[i]);
-    channelImageData.createCanvas(this.layerRecord[i]);
     this.channelImageData[i] = channelImageData;
   }
   stream.seek(this.offset + this.length, 0);

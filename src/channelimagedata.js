@@ -15,9 +15,8 @@ PSD.ChannelImageData = function() {
   this.offset;
   /** @type {number} */
   this.length;
-  /** @type {Array.<(PSD.ChannelRAW|PSD.ChannelRLE)>} */
+  /** @type {Array.<PSD.ChannelImage>} */
   this.channel;
-  // TODO: ベースプロトタイプを作り継承する
 };
 
 /**
@@ -25,10 +24,10 @@ PSD.ChannelImageData = function() {
  * @param {PSD.LayerRecord} layerRecord
  */
 PSD.ChannelImageData.prototype.parse = function(stream, layerRecord) {
-  /** @type {Array.<(PSD.ChannelRAW|PSD.ChannelRLE)>} */
+  /** @type {Array.<PSD.ChannelImage>} */
   var channels = this.channel = [];
-  /** @type {!(PSD.ChannelRAW|PSD.ChannelRLE)} */
-  var channel
+  /** @type {PSD.ChannelImage} */
+  var channel;
   /** @type {PSD.CompressionMethod} */
   var compressionMethod;
   /** @type {number} */
@@ -67,17 +66,18 @@ PSD.ChannelImageData.prototype.parse = function(stream, layerRecord) {
     channel.parse(stream, layerRecord, info.length - 2);
 
     channels[i] = channel;
-    //window.console.log("channel[" + i + '/' + (il - 1) + "]", channel, layerRecord.info[i].length, stream.tell() - pos);
     stream.seek(info.length + pos, 0);
   }
 
   this.length = stream.tell() - this.offset;
 };
-  /**
-   * @param {PSD.LayerRecord} layerRecord
-   * @return {HTMLCanvasElement}
-   */
-PSD.ChannelImageData.prototype.createCanvas = function(layerRecord) {
+
+/**
+ * @param {PSD.LayerRecord} layerRecord
+ * @param {PSD.ColorModeData} colorModeData
+ * @return {HTMLCanvasElement}
+ */
+PSD.ChannelImageData.prototype.createCanvas = function(header, colorModeData, layerRecord) {
   /** @type {HTMLCanvasElement} */
   var canvas =
     /** @type {HTMLCanvasElement} */
@@ -102,12 +102,16 @@ PSD.ChannelImageData.prototype.createCanvas = function(layerRecord) {
   var index;
   /** @type {Array.<(PSD.ChannelRAW|PSD.ChannelRLE)>} */
   var channels = this.channel;
-  /** @type {number} */
-  var channel;
+  /** @type {Array} */
+  var channel = [];
   /** @type {number} */
   var i;
   /** @type {number} */
   var il;
+  /** @type {Array.<!(Array.<number>|Uint8Array)>} */
+  var color;
+  /** @type {!(Array.<number>|Uint8Array)} */
+  var alpha;
 
   if (width === 0 || height === 0) {
     return null;
@@ -115,27 +119,36 @@ PSD.ChannelImageData.prototype.createCanvas = function(layerRecord) {
 
   imageData = ctx.createImageData(width, height);
   pixelArray = imageData.data;
-
   for (i = 0, il = channels.length; i < il; ++i) {
     switch (layerRecord.info[i].id) {
-      case 0: // red
-      case 1: // green
-      case 2: // blue
-        channel = layerRecord.info[i].id;
+      case 0: // r c
+      case 1: // g m
+      case 2: // b y
+      case 3: //   k
+        channel[layerRecord.info[i].id] = channels[i].channel;
         break;
       case -1: // alpha
-        channel = 3;
+        alpha = channels[i].channel;
         break;
       case -2:
       default:
         window.console.warn("not supported channel id", layerRecord.info[i].id);
         continue;
     }
-    for (y = 0; y < height; ++y) {
-      for (x = 0; x < width; ++x) {
-        index = (y * width + x);
-        pixelArray[index * 4 + channel] = channels[i].channel[index];
-      }
+  }
+
+  if (alpha) {
+    channel.push(alpha);
+  }
+  color = new PSD.Color(header, colorModeData, channel).toRGBA();
+
+  for (y = 0; y < height; ++y) {
+    for (x = 0; x < width; ++x) {
+      index = (y * width + x);
+      pixelArray[index * 4 + 0] = color[0][index];
+      pixelArray[index * 4 + 1] = color[1][index];
+      pixelArray[index * 4 + 2] = color[2][index];
+      pixelArray[index * 4 + 3] = color[3] ? color[3][index] : 255;
     }
   }
 
