@@ -7,7 +7,7 @@ goog.scope(function() {
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['Patta'] = function() {
+PSD.AdditionalLayerInfo['Patt'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -22,7 +22,7 @@ PSD.AdditionalLayerInfo['Patta'] = function() {
  * @param {number} length
  * @param {PSD.Header} header
  */
-PSD.AdditionalLayerInfo['Patta'].prototype.parse = function(stream, length, header) {
+PSD.AdditionalLayerInfo['Patt'].prototype.parse = function(stream, length, header) {
   /** @type {number} */
   var limit = stream.tell() + length;
   /** @type {number} */
