@@ -23,8 +23,9 @@
       <arg line="--root_with_prefix=&quot;${src} ../${src}&quot;"/>
       <arg line="--output_file=${depend}"/>
     </exec>
-    <fileset dir="${src}" includes="*.js" id="srcpath"/>
+    <fileset dir="${src}" includes="**/*.js" id="srcpath"/>
     <pathconvert property="srcfiles" refid="srcpath" pathsep=" "/>
+    <echo message="${srcfiles}"/>
   </target>
 
   <target name="parser" depends="deps,prebuild" description="build psd parser">
