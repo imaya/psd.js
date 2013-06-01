@@ -37,6 +37,3 @@ AdditionalLayerInfo['SoLd'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

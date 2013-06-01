@@ -1,4 +1,5 @@
 var AdditionalLayerInfo = require('../AdditionalLayerInfo');
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor

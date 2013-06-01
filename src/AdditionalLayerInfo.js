@@ -1,7 +1,9 @@
+var fs = require('fs');
+
 /**
  * @constructor
  */
-var AdditionalLayerInfo = function() {
+global.AdditionalLayerInfo = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -50,4 +52,13 @@ AdditionalLayerInfo.prototype.parse = function(stream, header) {
   stream.seek(this.offset + this.length, 0);
 };
 
+
 module.exports = AdditionalLayerInfo;
+
+
+require('./AdditionalLayerInfo/EffectsLayer');
+
+var layers = fs.readdirSync(__dirname + "/AdditionalLayerInfo");
+for(var i = 0; i < layers.length; i++) {
+  require('./AdditionalLayerInfo/' + layers[i]);
+}
