@@ -1,39 +1,35 @@
-goog.provide('PSD.LayerInfo');
-
-goog.require('PSD.StreamReader');
-goog.require('PSD.LayerRecord');
-goog.require('PSD.ChannelImageData');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var LayerRecord = require('./LayerRecord');
+var ChannelImageData = require('./ChannelImageData');
 
 /**
  * @constructor
  */
-PSD.LayerInfo = function() {
+var LayerInfo = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
   this.length;
   /** @type {number} */
   this.layerCount;
-  /** @type {Array.<PSD.LayerRecord>} */
+  /** @type {Array.<LayerRecord>} */
   this.layerRecord = [];
-  /** @type {Array.<PSD.ChannelImageData>} */
+  /** @type {Array.<ChannelImageData>} */
   this.channelImageData = [];
 };
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.Header} header
+ * @param {StreamReader} stream
+ * @param {Header} header
  */
-PSD.LayerInfo.prototype.parse = function(stream, header) {
+LayerInfo.prototype.parse = function(stream, header) {
   /** @type {number} */
   var i;
   /** @type {number} */
   var il;
-  /** @type {PSD.LayerRecord} */
+  /** @type {LayerRecord} */
   var layerRecord;
-  /** @type {PSD.ChannelImageData} */
+  /** @type {ChannelImageData} */
   var channelImageData;
 
   this.offset = stream.tell();
@@ -42,19 +38,18 @@ PSD.LayerInfo.prototype.parse = function(stream, header) {
   this.layerCount = Math.abs(stream.readInt16());
 
   for (i = 0, il = this.layerCount; i < il; ++i) {
-    layerRecord = new PSD.LayerRecord();
+    layerRecord = new LayerRecord();
     layerRecord.parse(stream, header);
     this.layerRecord[i] = layerRecord;
   }
 
   // TODO: ChannelImageData の実装はまだないのでスキップする
   for (i = 0, il = this.layerCount; i < il; ++i) {
-    channelImageData = new PSD.ChannelImageData();
+    channelImageData = new ChannelImageData();
     channelImageData.parse(stream, this.layerRecord[i]);
     this.channelImageData[i] = channelImageData;
   }
   stream.seek(this.offset + this.length, 0);
 };
 
-// end of scope
-});
+module.exports = LayerInfo;

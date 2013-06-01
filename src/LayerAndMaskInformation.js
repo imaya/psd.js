@@ -1,32 +1,29 @@
-goog.provide('PSD.LayerAndMaskInformation');
-
-goog.require('PSD.StreamReader');
-goog.require('PSD.LayerInfo');
-goog.require('PSD.GlobalLayerMaskInfo');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var LayerInfo = require('./LayerInfo');
+var GlobalLayerMaskInfo = require('./GlobalLayerMaskInfo');
+var AdditionalLayerInfo = require('./AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.LayerAndMaskInformation = function() {
+var LayerAndMaskInformation = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
   this.length;
-  /** @type {PSD.LayerInfo} */
+  /** @type {LayerInfo} */
   this.layerInfo;
-  /** @type {PSD.GlobalLayerMaskInfo} */
+  /** @type {GlobalLayerMaskInfo} */
   this.globalLayerMaskInfo;
-  /** @type {PSD.AdditionalLayerInfo} */
+  /** @type {AdditionalLayerInfo} */
   this.additionalLayerInfo;
 };
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.Header} header
+ * @param {StreamReader} stream
+ * @param {Header} header
  */
-PSD.LayerAndMaskInformation.prototype.parse = function(stream, header) {
+LayerAndMaskInformation.prototype.parse = function(stream, header) {
   /** @type {number} */
   var length;
 
@@ -35,15 +32,15 @@ PSD.LayerAndMaskInformation.prototype.parse = function(stream, header) {
   this.length = length + 4;
 
   if (length === 0) {
-    window.console.log("skip: layer and mask information (empty body)");
+    console.log("skip: layer and mask information (empty body)");
   }
 
   var pos = stream.tell() + length;
 
   // initialize
-  this.layerInfo = new PSD.LayerInfo();
-  this.globalLayerMaskInfo = new PSD.GlobalLayerMaskInfo();
-  this.additionalLayerInfo = new PSD.AdditionalLayerInfo();
+  this.layerInfo = new LayerInfo();
+  this.globalLayerMaskInfo = new GlobalLayerMaskInfo();
+  this.additionalLayerInfo = new AdditionalLayerInfo();
 
   // parse
   this.layerInfo.parse(stream, header);
@@ -54,5 +51,4 @@ PSD.LayerAndMaskInformation.prototype.parse = function(stream, header) {
   stream.seek(pos, 0);
 };
 
-  // end of scope
-});
+module.exports = LayerAndMaskInformation;

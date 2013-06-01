@@ -1,26 +1,24 @@
-goog.provide('PSD.ChannelRAW');
+var util = require('util');
 
-goog.require('PSD.ChannelImage');
-goog.require('PSD.StreamReader');
-goog.require('PSD.LayerRecord');
-
-goog.scope(function() {
+var ChannelImage = require('./ChannelImage');
+var StreamReader = require('./StreamReader');
+var LayerRecord = require('./LayerRecord');
 
 /**
- * @constructor
- * @extends {PSD.ChannelImage}
+ * @Constructor
+ * @extends {ChannelImage}
  */
-PSD.ChannelRAW = function() {
-  goog.base(this);
+var ChannelRAW = function() {
+  this.super_();
 };
-goog.inherits(PSD.ChannelRAW, PSD.ChannelImage);
+util.inherits(ChannelRAW, ChannelImage);
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.LayerRecord} layerRecord
+ * @param {StreamReader} stream
+ * @param {LayerRecord} layerRecord
  * @param {number} length
  */
-PSD.ChannelRAW.prototype.parse = function(stream, layerRecord, length) {
+ChannelRAW.prototype.parse = function(stream, layerRecord, length) {
   /** @type {number} */
   var width = layerRecord.right - layerRecord.left;
   /** @type {number} */
@@ -30,5 +28,4 @@ PSD.ChannelRAW.prototype.parse = function(stream, layerRecord, length) {
   this.channel = stream.read(length);
 };
 
-// end of scope
-});
+module.exports = ChannelRAW;

@@ -1,13 +1,10 @@
-goog.provide('PSD.AdditionalLayerInfo.vmsk');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
+var PathRecord = require('../PathRecord');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['vmsk'] = function() {
+AdditionalLayerInfo['vmsk'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,10 +14,10 @@ PSD.AdditionalLayerInfo['vmsk'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  * @param {number} length
  */
-PSD.AdditionalLayerInfo['vmsk'].prototype.parse = function(stream, length) {
+AdditionalLayerInfo['vmsk'].prototype.parse = function(stream, length) {
   /** @type {number} */
   var limit = stream.tell() + length;
 
@@ -29,12 +26,9 @@ PSD.AdditionalLayerInfo['vmsk'].prototype.parse = function(stream, length) {
   this.flags = stream.readUint32();
 
   while (stream.tell() + 26 <= limit) {
-    this.path = new PSD.PathRecord();
+    this.path = new PathRecord();
     this.path.parse(stream);
   }
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

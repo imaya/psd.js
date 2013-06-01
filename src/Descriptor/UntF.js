@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.UntF');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['UntF'] = function() {
+Descriptor['UntF'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -19,14 +15,11 @@ PSD.Descriptor['UntF'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['UntF'].prototype.parse = function(stream) {
+Descriptor['UntF'].prototype.parse = function(stream) {
   this.offset = stream.tell();
   this.units = stream.readString(4);
   this.value = stream.readFloat64();
   this.length = stream.tell() - this.offset;
 };
-
-
-});

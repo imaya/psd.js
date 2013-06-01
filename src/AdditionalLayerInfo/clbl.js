@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.clbl');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['clbl'] = function() {
+AdditionalLayerInfo['clbl'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,9 +13,9 @@ PSD.AdditionalLayerInfo['clbl'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['clbl'].prototype.parse = function(stream) {
+AdditionalLayerInfo['clbl'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   this.blendClippedElements = !!stream.readUint8();
@@ -29,6 +25,3 @@ PSD.AdditionalLayerInfo['clbl'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

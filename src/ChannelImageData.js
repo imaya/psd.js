@@ -1,34 +1,30 @@
-goog.provide('PSD.ChannelImageData');
-
-goog.require('PSD.StreamReader');
-goog.require('PSD.Enum');
-goog.require('PSD.ChannelRAW');
-goog.require('PSD.ChannelRLE');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var CompressionMethod = require('./CompressionMethod');
+var ChannelRAW   = require('./ChannelRaw');
+var ChannelRLE   = require('./ChannelRLE');
 
 /**
  * @constructor
  */
-PSD.ChannelImageData = function() {
+var ChannelImageData = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
   this.length;
-  /** @type {Array.<PSD.ChannelImage>} */
+  /** @type {Array.<ChannelImage>} */
   this.channel;
 };
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.LayerRecord} layerRecord
+ * @param {StreamReader} stream
+ * @param {LayerRecord} layerRecord
  */
-PSD.ChannelImageData.prototype.parse = function(stream, layerRecord) {
-  /** @type {Array.<PSD.ChannelImage>} */
+ChannelImageData.prototype.parse = function(stream, layerRecord) {
+  /** @type {Array.<ChannelImage>} */
   var channels = this.channel = [];
-  /** @type {PSD.ChannelImage} */
+  /** @type {ChannelImage} */
   var channel;
-  /** @type {PSD.CompressionMethod} */
+  /** @type {CompressionMethod} */
   var compressionMethod;
   /** @type {number} */
   var i;
@@ -46,7 +42,7 @@ PSD.ChannelImageData.prototype.parse = function(stream, layerRecord) {
     info = layerRecord.info[i];
 
     compressionMethod =
-      /** @type {PSD.CompressionMethod} */
+      /** @type {CompressionMethod} */
       stream.readUint16();
 
     if (info.length === 2) {
@@ -54,11 +50,11 @@ PSD.ChannelImageData.prototype.parse = function(stream, layerRecord) {
     }
 
     switch (compressionMethod) {
-      case PSD.CompressionMethod.RAW:
-        channel = new PSD.ChannelRAW();
+      case CompressionMethod.RAW:
+        channel = new ChannelRAW();
         break;
-      case PSD.CompressionMethod.RLE:
-        channel = new PSD.ChannelRLE();
+      case CompressionMethod.RLE:
+        channel = new ChannelRLE();
         break;
       default:
         throw new Error('unknown compression method: ' + compressionMethod);
@@ -73,11 +69,11 @@ PSD.ChannelImageData.prototype.parse = function(stream, layerRecord) {
 };
 
 /**
- * @param {PSD.LayerRecord} layerRecord
- * @param {PSD.ColorModeData} colorModeData
+ * @param {LayerRecord} layerRecord
+ * @param {ColorModeData} colorModeData
  * @return {HTMLCanvasElement}
  */
-PSD.ChannelImageData.prototype.createCanvas = function(header, colorModeData, layerRecord) {
+ChannelImageData.prototype.createCanvas = function(header, colorModeData, layerRecord) {
   /** @type {HTMLCanvasElement} */
   var canvas =
     /** @type {HTMLCanvasElement} */
@@ -100,7 +96,7 @@ PSD.ChannelImageData.prototype.createCanvas = function(header, colorModeData, la
   var y;
   /** @type {number} */
   var index;
-  /** @type {Array.<(PSD.ChannelRAW|PSD.ChannelRLE)>} */
+  /** @type {Array.<(ChannelRAW|ChannelRLE)>} */
   var channels = this.channel;
   /** @type {Array} */
   var channel = [];
@@ -137,7 +133,7 @@ PSD.ChannelImageData.prototype.createCanvas = function(header, colorModeData, la
         mask = channels[i].channel;
         break;
       default:
-        window.console.warn("not supported channel id", layerRecord.info[i].id);
+        console.log("not supported channel id", layerRecord.info[i].id);
         continue;
     }
   }
@@ -145,7 +141,7 @@ PSD.ChannelImageData.prototype.createCanvas = function(header, colorModeData, la
   if (alpha) {
     channel.push(alpha);
   }
-  color = new PSD.Color(header, colorModeData, channel).toRGBA();
+  color = new Color(header, colorModeData, channel).toRGBA();
 
   for (y = 0; y < height; ++y) {
     for (x = 0; x < width; ++x) {
@@ -166,5 +162,4 @@ PSD.ChannelImageData.prototype.createCanvas = function(header, colorModeData, la
   return canvas;
 };
 
-// end of scope
-});
+module.exports = ChannelImageData;

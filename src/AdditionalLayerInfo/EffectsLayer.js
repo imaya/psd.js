@@ -1,3 +1,1 @@
-goog.provide('PSD.AdditionalLayerInfo.EffectsLayer');
-
-goog.require('PSD.AdditionalLayerInfo');
+module.exports = require('../AdditionalLayerInfo');

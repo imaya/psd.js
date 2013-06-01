@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.alis');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['alis'] = function() {
+Descriptor['alis'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,9 +13,9 @@ PSD.Descriptor['alis'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['alis'].prototype.parse = function(stream) {
+Descriptor['alis'].prototype.parse = function(stream) {
   /** @type {number} */
   var length;
   this.offset = stream.tell();
@@ -30,6 +26,3 @@ PSD.Descriptor['alis'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-
-});

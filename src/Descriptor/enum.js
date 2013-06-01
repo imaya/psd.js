@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.Enum');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['enum'] = function() {
+Descriptor['enum'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -19,9 +15,9 @@ PSD.Descriptor['enum'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['enum'].prototype.parse = function(stream) {
+Descriptor['enum'].prototype.parse = function(stream) {
   /** @type {number} */
   var length;
 
@@ -43,6 +39,3 @@ PSD.Descriptor['enum'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-
-});

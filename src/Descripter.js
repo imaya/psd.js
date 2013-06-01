@@ -1,11 +1,8 @@
-goog.provide('PSD.Descriptor');
-
-goog.scope(function() {
 
 /**
  * @constructor
  */
-PSD.Descriptor = function() {
+var Descriptor = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -21,9 +18,9 @@ PSD.Descriptor = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor.prototype.parse = function(stream) {
+Descriptor.prototype.parse = function(stream) {
   /** @type {number} */
   var length;
   /** @type {string} */
@@ -34,7 +31,7 @@ PSD.Descriptor.prototype.parse = function(stream) {
   var i;
   /** @type {number} */
   var il;
-  /** @type {!{parse: function(PSD.StreamReader)}} */
+  /** @type {!{parse: function(StreamReader)}} */
   var data;
 
   this.offset = stream.tell();
@@ -53,13 +50,13 @@ PSD.Descriptor.prototype.parse = function(stream) {
     key = stream.readString(length);
     type = stream.readString(4);
 
-    if (typeof PSD.Descriptor[type] !== 'function') {
-      goog.global.console.warn('OSType Key not implemented:', type);
+    if (typeof Descriptor[type] !== 'function') {
+      console.log('OSType Key not implemented:', type);
       //console.log(hoge, String.fromCharCode.apply(null, hoge));
       break;
     }
 
-    data = new PSD.Descriptor[type]();
+    data = new Descriptor[type]();
     data.parse(stream);
 
     this.item.push({key: key, data: data});
@@ -68,6 +65,4 @@ PSD.Descriptor.prototype.parse = function(stream) {
   this.length = stream.tell() - this.offset;
 };
 
-// end of scope
-});
-
+module.exports = Descripter;

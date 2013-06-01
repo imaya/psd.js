@@ -1,13 +1,6 @@
-goog.provide('PSD.Descriptor.GlbC');
-
-goog.require('PSD.Descriptor');
-goog.require('PSD.Descriptor.type');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['GlbC'] = PSD.Descriptor['type'];
-
-});
+Descriptor['GlbC'] = Descriptor['type'];

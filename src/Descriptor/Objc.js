@@ -1,30 +1,23 @@
-goog.provide('PSD.Descriptor.Objc');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['Objc'] = function() {
+Descriptor['Objc'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
   this.length;
-  /** @type {PSD.Descriptor} */
+  /** @type {Descriptor} */
   this.value;
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['Objc'].prototype.parse = function(stream) {
+Descriptor['Objc'].prototype.parse = function(stream) {
   this.offset = stream.tell();
-  this.value = new PSD.Descriptor();
+  this.value = new Descriptor();
   this.value.parse(stream);
   this.length = stream.tell() - this.offset;
 };
-
-
-});

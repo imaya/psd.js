@@ -1,14 +1,10 @@
-goog.provide('PSD.AdditionalLayerInfo.SoCo');
-
-goog.require('PSD.AdditionalLayerInfo');
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['SoCo'] = function() {
+AdditionalLayerInfo['SoCo'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -20,17 +16,14 @@ PSD.AdditionalLayerInfo['SoCo'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['SoCo'].prototype.parse = function(stream) {
+AdditionalLayerInfo['SoCo'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   this.version = stream.readUint32();
-  this.descriptor = new PSD.Descriptor();
+  this.descriptor = new Descriptor();
   this.descriptor.parse(stream);
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

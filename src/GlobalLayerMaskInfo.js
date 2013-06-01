@@ -1,13 +1,9 @@
-goog.provide('PSD.GlobalLayerMaskInfo');
-
-goog.require('PSD.StreamReader');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
 
 /**
  * @constructor
  */
-PSD.GlobalLayerMaskInfo = function() {
+var GlobalLayerMaskInfo = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -25,10 +21,10 @@ PSD.GlobalLayerMaskInfo = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.Header} header
+ * @param {StreamReader} stream
+ * @param {Header} header
  */
-PSD.GlobalLayerMaskInfo.prototype.parse = function(stream, header) {
+GlobalLayerMaskInfo.prototype.parse = function(stream, header) {
   /** @type {number} */
   var length;
 
@@ -48,5 +44,4 @@ PSD.GlobalLayerMaskInfo.prototype.parse = function(stream, header) {
   stream.seek(this.offset + this.length, 0);
 };
 
-// end of scope
-});
+module.exports = GlobalLayerMaskInfo;

@@ -1,11 +1,7 @@
-goog.provide('PSD.LayerMaskData');
-
-goog.scope(function() {
-
 /**
  * @constructor
  */
-PSD.LayerMaskData = function() {
+LayerMaskData = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -39,9 +35,9 @@ PSD.LayerMaskData = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream stream reader.
+ * @param {StreamReader} stream stream reader.
  */
-PSD.LayerMaskData.prototype.parse = function(stream) {
+LayerMaskData.prototype.parse = function(stream) {
   /** @type {number} */
   var length;
 
@@ -50,7 +46,7 @@ PSD.LayerMaskData.prototype.parse = function(stream) {
   this.length = length + 4;
 
   if (length === 0) {
-    window.console.log("skip: layer mask data (empty body)");
+    console.log("skip: layer mask data (empty body)");
     return;
   }
 
@@ -86,5 +82,4 @@ PSD.LayerMaskData.prototype.parse = function(stream) {
   }
 };
 
-// end of scope
-});
+module.exports = LayerMaskData;

@@ -2,17 +2,16 @@
  * PSD parser in JavaScript.
  * @author imaya <imaya.devel@gmail.com>
  */
-goog.provide('PSD.Parser');
 
-goog.require('USE_TYPEDARRAY');
-goog.require('PSD.StreamReader');
-goog.require('PSD.Header');
-goog.require('PSD.ColorModeData');
-goog.require('PSD.ImageResources');
-goog.require('PSD.LayerAndMaskInformation');
-goog.require('PSD.ImageData');
+global.USE_TYPEDARRAY = true;
+global.COMPILED = true;
 
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var Header = require('./Header');
+var ColorModeData = require('./ColorModeData');
+var ImageResources = require('./ImageResources');
+var LayerAndMaskInformation = require('./LayerAndMaskInformation');
+var ImageData = require('./ImageData');
 
 /**
  * PSD parser
@@ -20,38 +19,38 @@ goog.scope(function() {
  * @param {!(Array.<number>|Uint8Array)} input input buffer.
  * @param {Object=} opt_param option parameters.
  */
-PSD.Parser = function(input, opt_param) {
+var Parser = function(input, opt_param) {
   if (!opt_param) {
     opt_param = {};
   }
 
-  /** @type {PSD.StreamReader} */
-  this.stream = new PSD.StreamReader(input, opt_param['inputPosition'] | 0);
-  /** @type {PSD.Header} */
+  /** @type {StreamReader} */
+  this.stream = new StreamReader(input, opt_param['inputPosition'] | 0);
+  /** @type {Header} */
   this.header;
-  /** @type {PSD.ColorModeData} */
+  /** @type {ColorModeData} */
   this.colorModeData;
-  /** @type {PSD.ImageResources} */
+  /** @type {ImageResources} */
   this.imageResources;
-  /** @type {PSD.LayerAndMaskInformation} */
+  /** @type {LayerAndMaskInformation} */
   this.layerAndMaskInformation;
-  /** @type {PSD.ImageData} */
+  /** @type {ImageData} */
   this.imageData;
 };
 
 /**
  * parse psd.
  */
-PSD.Parser.prototype.parse = function() {
-  /** @type {PSD.StreamReader} */
+Parser.prototype.parse = function() {
+  /** @type {StreamReader} */
   var stream = this.stream;
 
   // initialize
-  this.header = new PSD.Header();
-  this.colorModeData = new PSD.ColorModeData();
-  this.imageResources = new PSD.ImageResources();
-  this.layerAndMaskInformation = new PSD.LayerAndMaskInformation();
-  this.imageData = new PSD.ImageData();
+  this.header = new Header();
+  this.colorModeData = new ColorModeData();
+  this.imageResources = new ImageResources();
+  this.layerAndMaskInformation = new LayerAndMaskInformation();
+  this.imageData = new ImageData();
 
   // parse
   this.header.parse(stream);
@@ -59,8 +58,8 @@ PSD.Parser.prototype.parse = function() {
   this.imageResources.parse(stream);
   this.layerAndMaskInformation.parse(stream, this.header);
   this.imageData.parse(stream, this.header);
+
+  this.stream.input = null;
 };
 
-
-// end of scope
-});
+module.exports = Parser;

@@ -1,44 +1,40 @@
-goog.provide('PSD.ImageData');
-
-goog.require('PSD.StreamReader');
-goog.require('PSD.Header');
-goog.require('PSD.Enum');
-goog.require('PSD.ImageRAW');
-goog.require('PSD.ImageRLE');
-goog.require('PSD.Color');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var Header = require('./Header');
+var ImageRAW = require('./ImageRAW');
+var ImageRLE = require('./ImageRLE');
+var Color = require('./Color');
+var CompressionMethod = require('./CompressionMethod');
 
 /**
  * @constructor
  */
-PSD.ImageData = function() {
+var ImageData = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
   this.length;
-  /** @type {PSD.CompressionMethod} */
+  /** @type {CompressionMethod} */
   this.compressionMethod;
-  /** @type {!PSD.Image} */
+  /** @type {!Image} */
   this.image;
 };
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.Header} header
+ * @param {StreamReader} stream
+ * @param {Header} header
  */
-PSD.ImageData.prototype.parse = function(stream, header) {
+ImageData.prototype.parse = function(stream, header) {
   this.offset = stream.tell();
   this.compressionMethod =
-    /** @type {PSD.CompressionMethod} */
+    /** @type {CompressionMethod} */
     stream.readUint16();
 
   switch (this.compressionMethod) {
-    case PSD.CompressionMethod.RAW:
-      this.image = new PSD.ImageRAW();
+    case CompressionMethod.RAW:
+      this.image = new ImageRAW();
       break;
-    case PSD.CompressionMethod.RLE:
-      this.image = new PSD.ImageRLE();
+    case CompressionMethod.RLE:
+      this.image = new ImageRLE();
       break;
     default:
       throw new Error('unknown compression method');
@@ -49,11 +45,11 @@ PSD.ImageData.prototype.parse = function(stream, header) {
 };
 
 /**
- * @param {PSD.Header} header
- * @param {PSD.ColorModeData} colorModeData
+ * @param {Header} header
+ * @param {ColorModeData} colorModeData
  * @return {HTMLCanvasElement}
  */
-PSD.ImageData.prototype.createCanvas = function(header, colorModeData) {
+ImageData.prototype.createCanvas = function(header, colorModeData) {
   /** @type {HTMLCanvasElement} */
   var canvas =
     /** @type {HTMLCanvasElement} */
@@ -77,7 +73,7 @@ PSD.ImageData.prototype.createCanvas = function(header, colorModeData) {
   /** @type {number} */
   var index;
   /** @type {Array.<!(Array.<number>|Uint8Array)>} */
-  var color = new PSD.Color(header, colorModeData, this.image.channel).toRGB();
+  var color = new Color(header, colorModeData, this.image.channel).toRGB();
 
   if (width <= 0 || height <= 0) {
     return null;
@@ -102,5 +98,4 @@ PSD.ImageData.prototype.createCanvas = function(header, colorModeData) {
   return canvas;
 };
 
-/// end of scope
-});
+module.exports = ImageData;
