@@ -68,7 +68,8 @@ Descriptor.prototype.parse = function(stream) {
 
 module.exports = Descriptor;
 
-var layers = fs.readdirSync(__dirname + "/Descriptor");
-for(var i = 0; i < layers.length; i++) {
-  require('./Descriptor/' + layers[i]);
+
+var descriptors = fs.readdirSync(__dirname + "/Descriptor");
+for(var i = 0; i < descriptors.length; i++) {
+  require('./Descriptor/' + descriptors[i]);
 }

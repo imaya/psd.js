@@ -229,6 +229,11 @@ StreamReader.prototype.readWideString = function(length) {
   return charArray.join('');
 };
 
+StreamReader.prototype.readUnicode = function() {
+  var length = this.readUint32();
+  return this.readWideString(length);
+};
+
 /**
  * @return {string}
  */

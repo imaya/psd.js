@@ -1,9 +1,10 @@
+var fs = require('fs');
 var StreamReader = require('./StreamReader');
 
 /**
  * @constructor
  */
-var ImageResourceBlock = function() {
+global.ImageResourceBlock = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -26,14 +27,23 @@ ImageResourceBlock.prototype.parse = function(stream) {
 
   var signature = stream.readString(4);
   if (signature !== '8BIM') {
-    throw new Error('invalid signature: "' + signature + '"');
+    throw new Error('invalid signature at ' + this.offset);
   }
 
   this.identifier = stream.readUint16();
   this.name = stream.readPascalString();
   if(!this.name.length) { stream.readUint8(); }
   this.dataSize = stream.readUint32();
-  this.data = stream.read(this.dataSize);
+
+  if(ImageResourceBlock[this.identifier + ""]) {
+    var dataOffset = stream.tell();
+    var block = new ImageResourceBlock[this.identifier + ""];
+    block.parse(stream);
+    this.data = block;
+    stream.seek(dataOffset + this.dataSize, 0);
+  } else {
+    this.data = stream.read(this.dataSize);
+  }
 
   if(stream.readUint8() != 0) {
     stream.seek(stream.tell() - 1, 0);
@@ -43,3 +53,8 @@ ImageResourceBlock.prototype.parse = function(stream) {
 };
 
 module.exports = ImageResourceBlock;
+
+var blocks = fs.readdirSync(__dirname + "/ImageResourceBlocks");
+for(var i = 0; i < blocks.length; i++) {
+  require('./ImageResourceBlocks/' + blocks[i]);
+}
