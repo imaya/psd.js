@@ -20,3 +20,7 @@ Descriptor['long'].prototype.parse = function(stream) {
   this.value = stream.readInt32();
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['long'].prototype.toObject = function() {
+  return this.value;
+};

@@ -36,3 +36,7 @@ Descriptor['prop'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['prop'].prototype.toObject = function() {
+  return { name: this.name, classId: this.classId };
+}

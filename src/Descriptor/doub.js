@@ -20,3 +20,7 @@ Descriptor['doub'].prototype.parse = function(stream) {
   this.value = stream.readFloat64();
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['doub'].prototype.toObject = function() {
+  return this.value;
+};

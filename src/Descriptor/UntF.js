@@ -23,3 +23,7 @@ Descriptor['UntF'].prototype.parse = function(stream) {
   this.value = stream.readFloat64();
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['UntF'].prototype.toObject = function() {
+  return {value: this.value, units: this.units};
+};

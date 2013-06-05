@@ -26,3 +26,7 @@ Descriptor['TEXT'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['TEXT'].prototype.toObject = function() {
+  return this.string.slice(0, this.string.length - 1);
+}

@@ -66,6 +66,17 @@ Descriptor.prototype.parse = function(stream) {
   this.length = stream.tell() - this.offset;
 };
 
+Descriptor.prototype.toObject = function() {
+  var obj = {};
+  for(var i = 0; i < this.item.length; i++) {
+    var key = this.item[i].key.replace(/\s+$/, '');
+    var data = this.item[i].data;
+    if(!data.toObject) { console.log("NO toObject: " + key); }
+    obj[key] = data.toObject ? data.toObject() : data;
+  }
+  return obj;
+};
+
 module.exports = Descriptor;
 
 

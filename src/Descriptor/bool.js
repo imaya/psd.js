@@ -20,3 +20,5 @@ Descriptor['bool'].prototype.parse = function(stream) {
   this.value = !!stream.readUint8();
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['bool'].prototype.toObject = function() { return this.value; };

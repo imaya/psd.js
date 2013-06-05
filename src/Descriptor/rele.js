@@ -35,3 +35,7 @@ Descriptor['rele'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['rele'].prototype.toObject = function() {
+  return { name: this.name, value: this.value, classId: this.classId };
+}

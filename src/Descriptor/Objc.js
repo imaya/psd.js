@@ -21,3 +21,7 @@ Descriptor['Objc'].prototype.parse = function(stream) {
   this.value.parse(stream);
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['Objc'].prototype.toObject = function() {
+  return this.value.toObject ? this.value.toObject() : this.value;
+};

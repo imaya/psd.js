@@ -47,3 +47,7 @@ Descriptor['VlLs'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['VlLs'].prototype.toObject = function() {
+  return this.item.map(function(item) { return item.data.toObject ? item.data.toObject() : item.data; });
+};

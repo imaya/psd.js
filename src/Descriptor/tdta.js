@@ -26,3 +26,7 @@ Descriptor['tdta'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['tdta'].prototype.toObject = function() {
+  return this.data;
+}

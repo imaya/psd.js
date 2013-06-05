@@ -26,3 +26,7 @@ Descriptor['alis'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['alis'].prototype.toObject = function() {
+  return this.value;
+};

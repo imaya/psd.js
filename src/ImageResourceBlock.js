@@ -52,6 +52,10 @@ ImageResourceBlock.prototype.parse = function(stream) {
   this.length = stream.tell() - this.offset;
 };
 
+ImageResourceBlock.prototype.toObject = function() {
+  return this.data.toObject ? this.data.toObject() : this.data;
+}
+
 module.exports = ImageResourceBlock;
 
 var blocks = fs.readdirSync(__dirname + "/ImageResourceBlocks");

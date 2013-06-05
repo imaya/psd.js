@@ -60,3 +60,9 @@ Descriptor['obj '].Table = {
   'indx': 'long',
   'name': 'TEXT'
 };
+
+Descriptor['obj '].prototype.toObject = function() {
+  return this.item.map(function(item) {
+    return this.item.data.toObject ? this.item.data.toObject() : this.item.data
+  });
+};

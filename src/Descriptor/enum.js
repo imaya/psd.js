@@ -39,3 +39,7 @@ Descriptor['enum'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['enum'].prototype.toObject = function() {
+  return this.enum;
+};

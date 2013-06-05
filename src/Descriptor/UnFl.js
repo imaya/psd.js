@@ -33,3 +33,9 @@ Descriptor['UnFl'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
+
+Descriptor['UnFl'].prototype.toObject = function() {
+  var obj = {};
+  obj[this.key] = this.value;
+  return obj;
+};

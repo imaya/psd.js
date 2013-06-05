@@ -75,3 +75,11 @@ ImageResourceBlock['1050'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
+
+ImageResourceBlock['1050'].prototype.toObject = function() {
+  if(this.slices) {
+    return this.slices;
+  } else {
+    return this.descriptor.toObject ? this.descriptor.toObject() : this.descriptor;
+  }
+};
