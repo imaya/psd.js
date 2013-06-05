@@ -98,4 +98,8 @@ ImageData.prototype.createCanvas = function(header, colorModeData) {
   return canvas;
 };
 
+ImageData.prototype.createColor = function(header, colorModeData) {
+  return new Color(header, colorModeData, this.image.channel).toRGB();
+};
+
 module.exports = ImageData;
