@@ -1,5 +1,5 @@
 {
-  "name": "psd.js",
+  "name": "psd",
   "version": "0.0.1",
   "description": "PSD format parser",
   "main": "index.js",
