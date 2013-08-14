@@ -9,7 +9,7 @@ var Image = require('./Image');
  * @extends {Image}
  */
 var ImageRAW = function() {
-  this.super_();
+  Image.call(this);
 };
 util.inherits(ImageRAW, Image);
 

@@ -10,8 +10,6 @@ var LayerRecord = require('./LayerRecord');
  * @extends {ChannelImage}
  */
 var ChannelRLE = function() {
-  //constructor.super_();
-
   /** @type {Array.<number>} */
   this.lineLength;
 };

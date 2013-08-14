@@ -9,8 +9,6 @@ var Image = require('./Image');
  * @extends {Image}
  */
 ImageRLE = function() {
-  //this.super_();
-
   /** @type {Array.<number>} */
   this.lineLength;
 };

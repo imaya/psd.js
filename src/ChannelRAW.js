@@ -9,7 +9,7 @@ var LayerRecord = require('./LayerRecord');
  * @extends {ChannelImage}
  */
 var ChannelRAW = function() {
-  this.super_();
+  ChannelImage.call(this);
 };
 util.inherits(ChannelRAW, ChannelImage);
 
