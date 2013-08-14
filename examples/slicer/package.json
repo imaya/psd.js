@@ -1,0 +1,15 @@
+{
+  "name": "slicer",
+  "version": "0.0.1",
+  "description": "Slices PSDs based on embedded slicing info",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "canvas": "1.0.3"
+  },
+  "repository": "",
+  "author": "Michael Nutt",
+  "license": "BSD"
+}
