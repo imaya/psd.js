@@ -7,7 +7,7 @@ var Slice = function() {};
 Slice.prototype.parse = function(stream) {
   this.offset = stream.tell();
 
-  this.id = stream.readUint32();
+  this.sliceID = stream.readUint32();
   this.groupId = stream.readUint32();
   this.origin = stream.readUint32();
 
@@ -15,22 +15,22 @@ Slice.prototype.parse = function(stream) {
     this.associatedLayerId = stream.readUint32();
   }
 
-  this.name = stream.readUnicode();
-  this.type = stream.readUint32();
-  this.coordinates = {
-    left: stream.readUint32(),
-    top: stream.readUint32(),
-    right: stream.readUint32(),
-    bottom: stream.readUint32()
+  this.Nm = stream.readUnicode();
+  this.Type = stream.readUint32();
+  this.bounds = {
+    Left: stream.readUint32(),
+    Top: stream.readUint32(),
+    Rght: stream.readUint32(),
+    Btom: stream.readUint32()
   };
   this.url = stream.readUnicode();
   this.target = stream.readUnicode();
-  this.message = stream.readUnicode();
+  this.Msge = stream.readUnicode();
   this.altTag = stream.readUnicode();
   this.cellIsHtml = stream.readUint8();
   this.cellText = stream.readUnicode();
-  this.horizontalAlignment = stream.readUint32();
-  this.verticalAlignment = stream.readUint32();
+  this.horzAlign = stream.readUint32();
+  this.vertAlign = stream.readUint32();
   this.color = {
     alpha: stream.readUint8(),
     red: stream.readUint8(),
@@ -49,11 +49,11 @@ ImageResourceBlock['1050'].prototype.parse = function(stream) {
   this.version = stream.readUint32();
 
   if(this.version == 6) {
-    this.rectangle = {
-      top: stream.readUint32(),
-      left: stream.readUint32(),
-      bottom: stream.readUint32(),
-      right: stream.readUint32()
+    this.bounds = {
+      Top: stream.readUint32(),
+      Left: stream.readUint32(),
+      Bottom: stream.readUint32(),
+      Right: stream.readUint32()
     };
 
     this.name = stream.readUnicode();
@@ -78,7 +78,7 @@ ImageResourceBlock['1050'].prototype.parse = function(stream) {
 
 ImageResourceBlock['1050'].prototype.toObject = function() {
   if(this.slices) {
-    return this.slices;
+    return {slices: this.slices};
   } else {
     return this.descriptor.toObject ? this.descriptor.toObject() : this.descriptor;
   }
