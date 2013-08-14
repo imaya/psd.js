@@ -1,7 +1,7 @@
 var fs = require('fs')
-var Parser = require('./src/Parser');
+var Parser = require('../src/Parser');
 
-var data = fs.readFileSync('/Users/Michael/Documents/test.psd');
+var data = fs.readFileSync(__dirname + '/../testdata/simple.psd');
 
 var parser = new Parser(data);
 parser.parse();
