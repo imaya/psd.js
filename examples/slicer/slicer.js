@@ -1,8 +1,8 @@
 var fs = require('fs')
 var Parser = require('../..').Parser;
 var Canvas = require('canvas');
-var PixelArray = Canvas.PixelArray;
-var ImageData = Canvas.ImageData;
+var PixelArray = require('canvas/lib/bindings').CanvasPixelArray;
+var ImageData = require('canvas/lib/bindings').ImageData;
 
 if(!process.argv[2]) {
   console.log("Usage: node slicer.js FILE_NAME.psd");
