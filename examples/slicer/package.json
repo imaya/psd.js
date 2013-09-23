@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "canvas": "1.0.3"
+    "canvas": "1.1.0"
   },
   "repository": "",
   "author": "Michael Nutt",
