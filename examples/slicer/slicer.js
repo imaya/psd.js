@@ -4,8 +4,8 @@ var Canvas = require('canvas');
 var PixelArray = require('canvas/lib/bindings').CanvasPixelArray;
 var ImageData = require('canvas/lib/bindings').ImageData;
 
-if(!process.argv[2]) {
-  console.log("Usage: node slicer.js FILE_NAME.psd");
+if(!process.argv[3]) {
+  console.log("Usage: node slicer.js FILE_NAME.psd OUT_DIRECTORY");
   process.exit(1);
 }
 
@@ -39,7 +39,7 @@ var ctx = canvas.getContext('2d');
 var imageData = new ImageData(pixels);
 ctx.putImageData(imageData, 0, 0);
 
-canvas.pngStream().pipe(fs.createWriteStream(__dirname + '/../out/whole.png'));
+canvas.pngStream().pipe(fs.createWriteStream(process.argv[3] + '/whole.png'));
 
 var resources = {};
 var imageResources = psd.imageResources.imageResources;
@@ -72,7 +72,7 @@ for(var i = 0; i < slices.length; i++) {
                                                     slice.width,
                                                     slice.height].join(', '));
 
-    var out = fs.createWriteStream(__dirname + '/../out/' + slice.id + '.png');
+    var out = fs.createWriteStream(process.argv[3] + '/' + slice.id + '.png');
     sliceCanvas.pngStream().pipe(out);
   })(slices[i]);
 }
