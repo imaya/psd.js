@@ -31,6 +31,6 @@ Descriptor['type'].prototype.parse = function(stream) {
   this.length = stream.tell() - this.offset;
 };
 
-Descriptor['tdta'].prototype.toObject = function() {
+Descriptor['type'].prototype.toObject = function() {
   return { name: this.name, classId: this.classId };
 }
