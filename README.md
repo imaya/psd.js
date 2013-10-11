@@ -6,15 +6,17 @@ PSD.js is a library for parsing Photoshop PSD files.
 Usage
 -----
 
-    var Parser = require('psd.js').Parser;
-    var fs = require('fs');
-    
-    var data = fs.readFileSync('/path/to/file.psd');
-    var psd = new Parser(data);
-    
-    psd.parse();
-    
-    console.log(psd);
+``` javascript
+var Parser = require('psd.js').Parser;
+var fs = require('fs');
+
+var data = fs.readFileSync('/path/to/file.psd');
+var psd = new Parser(data);
+
+psd.parse();
+
+console.log(psd);
+```
     
 Acknowledgements
 ----------------
