@@ -1,6 +1,6 @@
 var StreamReader = require('./StreamReader');
 var CompressionMethod = require('./CompressionMethod');
-var ChannelRAW   = require('./ChannelRaw');
+var ChannelRAW   = require('./ChannelRAW');
 var ChannelRLE   = require('./ChannelRLE');
 
 /**
