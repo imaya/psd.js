@@ -78,9 +78,3 @@ Descriptor.prototype.toObject = function() {
 };
 
 module.exports = Descriptor;
-
-
-var descriptors = fs.readdirSync(__dirname + "/Descriptor");
-for(var i = 0; i < descriptors.length; i++) {
-  require('./Descriptor/' + descriptors[i]);
-}
