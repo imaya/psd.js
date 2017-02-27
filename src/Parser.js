@@ -70,15 +70,15 @@ Parser.prototype.toPng = function(){
   var canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
-  let context = canvas.getContext('2d');
-  let imageData = context.createImageData(width, height);
-  let pixelData = imageData.data;
+  var context = canvas.getContext('2d');
+  var imageData = context.createImageData(width, height);
+  var pixelData = imageData.data;
 
   //copy in colors
   var colors = this.imageData.createColor(this.header, this.colorModeData);
-  for(let y = 0; y < height; ++y) {
-    for(let x = 0; x < width; ++x) {
-      let index = (y * width + x);
+  for(var y = 0; y < height; ++y) {
+    for(var x = 0; x < width; ++x) {
+      var index = (y * width + x);
       pixelData[index * 4    ] = colors[0][index];
       pixelData[index * 4 + 1] = colors[1][index];
       pixelData[index * 4 + 2] = colors[2][index];
