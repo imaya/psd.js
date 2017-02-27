@@ -104,7 +104,6 @@ ImageResourceBlock['1050'].prototype.parse = function(stream) {
 
   this.version = stream.readUint32();
 
-  console.log(`1050 parse`);
   if(this.version == 6) {
     this.bounds = {
       Top: stream.readUint32(),
