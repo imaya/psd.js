@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.EffectsLayer.sofi');
-
-goog.require('PSD.AdditionalLayerInfo.EffectsLayer');
-
-goog.scope(function() {
+var EffectsLayer = require('../EffectsLayer');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo.EffectsLayer['sofi'] = function() {
+AdditionalLayerInfo.EffectsLayer['sofi'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -29,9 +25,9 @@ PSD.AdditionalLayerInfo.EffectsLayer['sofi'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo.EffectsLayer['sofi'].prototype.parse = function(stream) {
+AdditionalLayerInfo.EffectsLayer['sofi'].prototype.parse = function(stream) {
   /** @type {string} */
   var signature;
 
@@ -69,6 +65,3 @@ PSD.AdditionalLayerInfo.EffectsLayer['sofi'].prototype.parse = function(stream) 
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

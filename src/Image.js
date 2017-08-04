@@ -1,20 +1,15 @@
-goog.provide('PSD.Image');
-
-goog.scope(function() {
-
 /**
  * @constructor
  */
-PSD.Image = function() {
+var Image = function() {
   /** @type {Array} */
   this.channel;
 };
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.Header} header
+ * @param {StreamReader} stream
+ * @param {Header} header
  */
-PSD.Image.prototype.parse = goog.abstractMethod;
+Image.prototype.parse = function() { throw("abstract"); };
 
-// end of scope
-});
+module.exports = Image;

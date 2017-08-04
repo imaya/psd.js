@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.infx');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['infx'] = function() {
+AdditionalLayerInfo['infx'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,9 +13,9 @@ PSD.AdditionalLayerInfo['infx'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['infx'].prototype.parse = function(stream) {
+AdditionalLayerInfo['infx'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   this.blendInteriorElements = !!stream.readUint8();
@@ -29,6 +25,3 @@ PSD.AdditionalLayerInfo['infx'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

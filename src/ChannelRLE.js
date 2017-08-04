@@ -1,29 +1,27 @@
-goog.provide('PSD.ChannelRLE');
+var util = require('util');
 
-goog.require('PSD.ChannelImage');
-goog.require('PSD.StreamReader');
-goog.require('PSD.LayerRecord');
+var ChannelImage = require('./ChannelImage');
+var StreamReader = require('./StreamReader');
+var LayerRecord = require('./LayerRecord');
 
-goog.scope(function() {
 
 /**
  * @constructor
- * @extends {PSD.ChannelImage}
+ * @extends {ChannelImage}
  */
-PSD.ChannelRLE = function() {
-  goog.base(this);
-
+var ChannelRLE = function() {
   /** @type {Array.<number>} */
   this.lineLength;
 };
-goog.inherits(PSD.ChannelRLE, PSD.ChannelImage);
+
+util.inherits(ChannelRLE, ChannelImage);
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.LayerRecord} layerRecord
+ * @param {StreamReader} stream
+ * @param {LayerRecord} layerRecord
  * @param {number} length
  */
-PSD.ChannelRLE.prototype.parse = function(stream, layerRecord, length) {
+ChannelRLE.prototype.parse = function(stream, layerRecord, length) {
   /** @type {number} */
   var i;
   /** @type {Array.<number>} */
@@ -66,5 +64,4 @@ PSD.ChannelRLE.prototype.parse = function(stream, layerRecord, length) {
   }
 };
 
-// end of scope
-});
+module.exports = ChannelRLE;

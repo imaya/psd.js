@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.bool');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['bool'] = function() {
+Descriptor['bool'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,13 +13,12 @@ PSD.Descriptor['bool'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['bool'].prototype.parse = function(stream) {
+Descriptor['bool'].prototype.parse = function(stream) {
   this.offset = stream.tell();
   this.value = !!stream.readUint8();
   this.length = stream.tell() - this.offset;
 };
 
-
-});
+Descriptor['bool'].prototype.toObject = function() { return this.value; };

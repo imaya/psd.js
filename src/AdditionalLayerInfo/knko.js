@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.knko');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['knko'] = function() {
+AdditionalLayerInfo['knko'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,9 +13,9 @@ PSD.AdditionalLayerInfo['knko'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['knko'].prototype.parse = function(stream) {
+AdditionalLayerInfo['knko'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   this.knockout = !!stream.readUint8();
@@ -29,6 +25,3 @@ PSD.AdditionalLayerInfo['knko'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

@@ -1,13 +1,10 @@
-goog.provide('PSD.AdditionalLayerInfo.Patt');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
+var ColorMode = require('../ColorMode');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['Patt'] = function() {
+AdditionalLayerInfo['Patt'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -18,11 +15,11 @@ PSD.AdditionalLayerInfo['Patt'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  * @param {number} length
- * @param {PSD.Header} header
+ * @param {Header} header
  */
-PSD.AdditionalLayerInfo['Patt'].prototype.parse = function(stream, length, header) {
+AdditionalLayerInfo['Patt'].prototype.parse = function(stream, length, header) {
   /** @type {number} */
   var limit = stream.tell() + length;
   /** @type {number} */
@@ -58,7 +55,7 @@ PSD.AdditionalLayerInfo['Patt'].prototype.parse = function(stream, length, heade
     name = stream.readWideString(stream.readUint32());
     id = stream.readPascalString();
 
-    if (header.colorMode === PSD.ColorMode.INDEXED_COLOR) {
+    if (header.colorMode === ColorMode.INDEXED_COLOR) {
       colorTable = stream.read(256*3);
     }
 
@@ -68,7 +65,3 @@ PSD.AdditionalLayerInfo['Patt'].prototype.parse = function(stream, length, heade
 
   this.length = stream.tell() - this.offset;
 };
-
-
-// end of scope
-});

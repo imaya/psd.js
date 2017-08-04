@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.lsct');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['lsct'] = function() {
+AdditionalLayerInfo['lsct'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -19,10 +15,10 @@ PSD.AdditionalLayerInfo['lsct'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  * @param {number} length
  */
-PSD.AdditionalLayerInfo['lsct'].prototype.parse = function(stream, length) {
+AdditionalLayerInfo['lsct'].prototype.parse = function(stream, length) {
   /** @type {string} */
   var signature;
 
@@ -40,6 +36,3 @@ PSD.AdditionalLayerInfo['lsct'].prototype.parse = function(stream, length) {
 
   this.length = stream.tell() - this.offset;
 };
-
-
-});

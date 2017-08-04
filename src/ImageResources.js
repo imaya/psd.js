@@ -1,26 +1,22 @@
-goog.provide('PSD.ImageResources');
-
-goog.require('PSD.StreamReader');
-goog.require('PSD.ImageResourceBlock');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var ImageResourceBlock = require('./ImageResourceBlock');
 
 /**
  * @constructor
  */
-PSD.ImageResources = function() {
+var ImageResources = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
   this.length;
-  /** @type {PSD.ImageResourceBlock} */
+  /** @type {ImageResourceBlock} */
   this.imageResource;
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.ImageResources.prototype.parse = function(stream) {
+ImageResources.prototype.parse = function(stream) {
   /** @type {number} */
   var length;
 
@@ -28,11 +24,14 @@ PSD.ImageResources.prototype.parse = function(stream) {
   length = stream.readUint32();
   this.length = length + 4;
 
-  this.imageResource = new PSD.ImageResourceBlock();
-  this.imageResource.parse(stream);
+  this.imageResources = [];
+  while(stream.tell() < this.offset + this.length) {
+    var imageResource = new ImageResourceBlock();
+    imageResource.parse(stream)
+    this.imageResources.push(imageResource);
+  }
 
   stream.seek(this.offset + this.length, 0);
 };
 
-// end of scope
-});
+module.exports = ImageResources;

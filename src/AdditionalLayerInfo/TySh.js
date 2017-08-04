@@ -1,13 +1,10 @@
-goog.provide('PSD.AdditionalLayerInfo.TySh');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['TySh'] = function() {
+AdditionalLayerInfo['TySh'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -20,13 +17,13 @@ PSD.AdditionalLayerInfo['TySh'] = function() {
   this.textVersion;
   /** @type {number}*/
   this.textDescriptorVersion;
-  /** @type {PSD.Descriptor} */
+  /** @type {Descriptor} */
   this.textData;
   /** @type {number} */
   this.warpVersion;
   /** @type {number} */
   this.warpDescriptorVersion;
-  /** @type {PSD.Descriptor} */
+  /** @type {Descriptor} */
   this.warpData;
   /** @type {!(Array.<number>|Uint8Array)} */
   this.left;
@@ -39,9 +36,9 @@ PSD.AdditionalLayerInfo['TySh'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['TySh'].prototype.parse = function(stream) {
+AdditionalLayerInfo['TySh'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   this.version = stream.readInt16();
@@ -56,23 +53,23 @@ PSD.AdditionalLayerInfo['TySh'].prototype.parse = function(stream) {
 
   this.textVersion = stream.readInt16();
   this.textDescriptorVersion = stream.readInt32();
-  this.textData = new PSD.Descriptor();
+  this.textData = new Descriptor();
   this.textData.parse(stream);
 
   // parse failure
   if (this.textData.items !== this.textData.item.length) {
-    goog.global.console.error('Descriptor parsing failed');
+    console.log('Descriptor parsing failed');
     return;
   }
 
   this.warpVersion = stream.readInt16();
   this.warpDescriptorVersion = stream.readInt32();
-  this.warpData = new PSD.Descriptor();
+  this.warpData = new Descriptor();
   this.warpData.parse(stream);
 
 
   // TODO: 4 Byte * 4?
-  goog.global.console.log('TySh implementation is incomplete');
+  console.log('TySh implementation is incomplete');
   this.left = stream.readInt32();
   this.top = stream.readInt32();
   this.right = stream.readInt32();
@@ -85,7 +82,7 @@ PSD.AdditionalLayerInfo['TySh'].prototype.parse = function(stream) {
   this.bottom = stream.readFloat64();
 
   stream.seek(-32);
-  goog.global.console.log('64 or 32:',
+  console.log('64 or 32:',
     this.left,
     this.top,
     this.right,
@@ -99,6 +96,3 @@ PSD.AdditionalLayerInfo['TySh'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.rele');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['rele'] = function() {
+Descriptor['rele'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -21,9 +17,9 @@ PSD.Descriptor['rele'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['rele'].prototype.parse = function(stream) {
+Descriptor['rele'].prototype.parse = function(stream) {
   /** @type {number} */
   var length;
 
@@ -40,5 +36,6 @@ PSD.Descriptor['rele'].prototype.parse = function(stream) {
   this.length = stream.tell() - this.offset;
 };
 
-
-});
+Descriptor['rele'].prototype.toObject = function() {
+  return { name: this.name, value: this.value, classId: this.classId };
+}

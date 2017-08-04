@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.fxrp');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['fxrp'] = function() {
+AdditionalLayerInfo['fxrp'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,9 +13,9 @@ PSD.AdditionalLayerInfo['fxrp'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['fxrp'].prototype.parse = function(stream) {
+AdditionalLayerInfo['fxrp'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   // TODO: decode double
@@ -30,6 +26,3 @@ PSD.AdditionalLayerInfo['fxrp'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

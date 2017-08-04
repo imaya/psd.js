@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.shmd');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['shmd'] = function() {
+AdditionalLayerInfo['shmd'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -19,9 +15,9 @@ PSD.AdditionalLayerInfo['shmd'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['shmd'].prototype.parse = function(stream) {
+AdditionalLayerInfo['shmd'].prototype.parse = function(stream) {
   /** @type {string} */
   var signature;
   /** @type {string} */
@@ -62,6 +58,3 @@ PSD.AdditionalLayerInfo['shmd'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});
