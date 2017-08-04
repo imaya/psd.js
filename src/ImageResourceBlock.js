@@ -1,4 +1,12 @@
 var StreamReader = require('./StreamReader');
+
+var bool = require('./Descriptor/bool');
+var doub = require('./Descriptor/doub');
+var enumm = require('./Descriptor/enum');
+var long = require('./Descriptor/long');
+var Objc = require('./Descriptor/Objc');
+var TEXT = require('./Descriptor/TEXT');
+var VlLs = require('./Descriptor/VlLs');
 var Descriptor = require('./Descriptor');
 var util = require('util');
 
@@ -24,6 +32,7 @@ global.ImageResourceBlock = function() {
  * @param {StreamReader} stream
  */
 ImageResourceBlock.prototype.parse = function(stream) {
+
   this.offset = stream.tell();
 
   var signature = stream.readString(4);
@@ -127,6 +136,20 @@ ImageResourceBlock['1050'].prototype.parse = function(stream) {
 
     this.descriptor = new Descriptor();
     this.descriptor.parse(stream);
+    var sliceDataArray = this.descriptor.item[2].data.item;
+    this.slices = sliceDataArray.map(function(sliceData) {
+      var attrs = sliceData.data.value.item;
+      var bounds = attrs[4].data.value.item;
+      return {
+        origin: attrs[2].data.enum,
+        bounds: {
+          Top: bounds[0].data.value,
+          Left: bounds[1].data.value,
+          Btom: bounds[2].data.value,
+          Rght: bounds[3].data.value,
+        }
+      };
+    });
   }
 
   this.length = stream.tell() - this.offset;
