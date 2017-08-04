@@ -1,25 +1,23 @@
-goog.provide('PSD.ImageRAW');
+var util = require('util');
 
-goog.require('PSD.StreamReader');
-goog.require('PSD.Header');
-goog.require('PSD.Image');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var Header = require('./Header');
+var Image = require('./Image');
 
 /**
  * @constructor
- * @extends {PSD.Image}
+ * @extends {Image}
  */
-PSD.ImageRAW = function() {
-  goog.base(this);
+var ImageRAW = function() {
+  Image.call(this);
 };
-goog.inherits(PSD.ImageRAW, PSD.Image);
+util.inherits(ImageRAW, Image);
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.Header} header
+ * @param {StreamReader} stream
+ * @param {Header} header
  */
-PSD.ImageRAW.prototype.parse = function(stream, header) {
+ImageRAW.prototype.parse = function(stream, header) {
   /** @type {Array} */
   var channel = this.channel = [];
   /** @type {number} */
@@ -38,5 +36,4 @@ PSD.ImageRAW.prototype.parse = function(stream, header) {
   }
 };
 
-// end of scope
-});
+module.exports = ImageRAW;

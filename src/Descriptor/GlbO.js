@@ -1,13 +1,6 @@
-goog.provide('PSD.Descriptor.GlbO');
-
-goog.require('PSD.Descriptor');
-goog.require('PSD.Descriptor.Objc');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['GlbO'] = PSD.Descriptor['Objc'];
-
-});
+Descriptor['GlbO'] = Descriptor['Objc'];

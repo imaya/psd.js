@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.lrFX');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['lrFX'] = function() {
+AdditionalLayerInfo['lrFX'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -21,14 +17,14 @@ PSD.AdditionalLayerInfo['lrFX'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['lrFX'].prototype.parse = function(stream) {
+AdditionalLayerInfo['lrFX'].prototype.parse = function(stream) {
   /** @type {string} */
   var signature;
   /** @type {string} */
   var key;
-  /** @type {{parse: function(PSD.StreamReader)}} */
+  /** @type {{parse: function(StreamReader)}} */
   var effect;
   /** @type {number} */
   var i;
@@ -43,26 +39,23 @@ PSD.AdditionalLayerInfo['lrFX'].prototype.parse = function(stream) {
     // signature
     signature = stream.readString(4);
     if (signature !== '8BIM') {
-      goog.global.console.warn('invalid signature:', signature);
+      console.log('invalid signature:', signature);
       break;
     }
 
     this.key = key = stream.readString(4);
-    if (typeof PSD.AdditionalLayerInfo.EffectsLayer[this.key] === 'function') {
-      effect = new (PSD.AdditionalLayerInfo.EffectsLayer[this.key])();
+    if (typeof AdditionalLayerInfo.EffectsLayer[this.key] === 'function') {
+      effect = new (AdditionalLayerInfo.EffectsLayer[this.key])();
       effect.parse(stream);
       this.effect[i] = {
         key: key,
         effect: effect
       };
     } else {
-      goog.global.console.warn('detect unknown key:', key);
+      console.log('detect unknown key:', key);
       break;
     }
   }
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

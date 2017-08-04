@@ -1,20 +1,16 @@
-goog.provide('PSD.Color');
-
-goog.require('PSD.Header');
-goog.require('PSD.Enum');
-
-goog.scope(function() {
+var Header = require('./Header');
+var ColorMode = require('./ColorMode');
 
 /**
- * @param {PSD.Header} header
- * @param {PSD.ColorModeData} colorModeData
+ * @param {Header} header
+ * @param {ColorModeData} colorModeData
  * @param {Array} channels
  * @constructor
  */
-PSD.Color = function(header, colorModeData, channels) {
-  /** @type {PSD.Header} */
+var Color = function(header, colorModeData, channels) {
+  /** @type {Header} */
   this.header = header;
-  /** @type {PSD.ColorModeData} */
+  /** @type {ColorModeData} */
   this.colorModeData = colorModeData;
   /** @type {Array} */
   this.channel = channels;
@@ -30,30 +26,30 @@ PSD.Color = function(header, colorModeData, channels) {
   this.alphaChannel;
 };
 
-PSD.Color.prototype.parse = function() {
+Color.prototype.parse = function() {
   switch (this.header.colorMode) {
-    case PSD.ColorMode.BITMAP:
-      window.console.error('bitmap color mode not supported');
+    case ColorMode.BITMAP:
+      console.log('bitmap color mode not supported');
       break;
-    case PSD.ColorMode.DUOTONE:
-      window.console.warn('duotone color mode implementation is incomplete');
+    case ColorMode.DUOTONE:
+      console.log('duotone color mode implementation is incomplete');
       /* FALLTHROUGH */
-    case PSD.ColorMode.GRAYSCALE:
+    case ColorMode.GRAYSCALE:
       this.fromGrayscale();
       break;
-    case PSD.ColorMode.INDEXED_COLOR:
+    case ColorMode.INDEXED_COLOR:
       this.fromIndexedColor();
       break;
-    case PSD.ColorMode.MULTICHANNEL_COLOR:
-      window.console.warn('multichannel color mode implementation is incomplete');
+    case ColorMode.MULTICHANNEL_COLOR:
+      console.log('multichannel color mode implementation is incomplete');
       /* FALLTHROUGH */
-    case PSD.ColorMode.RGB_COLOR:
+    case ColorMode.RGB_COLOR:
       this.fromRGB();
       break;
-    case PSD.ColorMode.CMYK_COLOR:
+    case ColorMode.CMYK_COLOR:
       this.fromCMYK();
       break;
-    case PSD.ColorMode.LAB_COLOR:
+    case ColorMode.LAB_COLOR:
       this.fromLAB();
       break;
   }
@@ -61,7 +57,7 @@ PSD.Color.prototype.parse = function() {
   this.parsed = true;
 };
 
-PSD.Color.prototype.fromRGB = function() {
+Color.prototype.fromRGB = function() {
   /** @type {!(Array.<number>|Uint8Array)} */
   var r = this.redChannel   = this.channel[0];
   /** @type {!(Array.<number>|Uint8Array)} */
@@ -116,7 +112,7 @@ PSD.Color.prototype.fromRGB = function() {
   }
 };
 
-PSD.Color.prototype.fromIndexedColor = function() {
+Color.prototype.fromIndexedColor = function() {
   /** @type {!(Array.<number>|Uint8Array)} */
   var indexed = this.channel[0];
   /** @type {number} */
@@ -143,7 +139,7 @@ PSD.Color.prototype.fromIndexedColor = function() {
   }
 };
 
-PSD.Color.prototype.fromGrayscale = function() {
+Color.prototype.fromGrayscale = function() {
   /** @type {!(Array.<number>|Uint8Array)} */
   var gray = this.channel[0];
   /** @type {number} */
@@ -166,7 +162,7 @@ PSD.Color.prototype.fromGrayscale = function() {
   }
 };
 
-PSD.Color.prototype.fromCMYK = function() {
+Color.prototype.fromCMYK = function() {
   /** @type {!(Array.<number>|Uint8Array)} */
   var cc = this.channel[0];
   /** @type {!(Array.<number>|Uint8Array)} */
@@ -211,7 +207,7 @@ PSD.Color.prototype.fromCMYK = function() {
   }
 };
 
-PSD.Color.prototype.fromLAB = function() {
+Color.prototype.fromLAB = function() {
   /** @type {!(Array.<number>|Uint8Array)} */
   var lc = this.channel[0];
   /** @type {!(Array.<number>|Uint8Array)} */
@@ -277,7 +273,7 @@ PSD.Color.prototype.fromLAB = function() {
 /**
  * @return {Array.<!(Array.<number>|Uint8Array)>} RGB Channels.
  */
-PSD.Color.prototype.toRGB = function() {
+Color.prototype.toRGB = function() {
   if (!this.parsed) {
     this.parse();
   }
@@ -292,7 +288,7 @@ PSD.Color.prototype.toRGB = function() {
 /**
  * @return {Array.<!(Array.<number>|Uint8Array)>} RGBA Channels.
  */
-PSD.Color.prototype.toRGBA = function() {
+Color.prototype.toRGBA = function() {
   if (!this.parsed) {
     this.parse();
   }
@@ -305,5 +301,4 @@ PSD.Color.prototype.toRGBA = function() {
   ];
 };
 
-// end of scope
-});
+module.exports = Color;

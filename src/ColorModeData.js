@@ -1,15 +1,11 @@
-goog.provide('PSD.ColorModeData');
-
-goog.require('PSD.StreamReader');
-goog.require('PSD.Header');
-goog.require('PSD.Enum');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var Header = require('./Header');
+var ColorMode = require('./ColorMode');
 
 /**
  * @constructor
  */
-PSD.ColorModeData = function() {
+var ColorModeData = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -19,10 +15,10 @@ PSD.ColorModeData = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.Header} header
+ * @param {StreamReader} stream
+ * @param {Header} header
  */
-PSD.ColorModeData.prototype.parse = function(stream, header) {
+ColorModeData.prototype.parse = function(stream, header) {
   /** @type {number} */
   var length;
 
@@ -31,12 +27,11 @@ PSD.ColorModeData.prototype.parse = function(stream, header) {
   length = stream.readUint32();
   this.length = length + 4;
 
-  if (header.colorMode === PSD.ColorMode.INDEXED_COLOR && length !== 768) {
+  if (header.colorMode === ColorMode.INDEXED_COLOR && length !== 768) {
     throw new Error('invalid color mode data');
   }
 
   this.data = stream.read(length);
 };
 
-// end of scope
-});
+module.exports = ColorModeData;

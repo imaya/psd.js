@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.Long');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['long'] = function() {
+Descriptor['long'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,12 +13,14 @@ PSD.Descriptor['long'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['long'].prototype.parse = function(stream) {
+Descriptor['long'].prototype.parse = function(stream) {
   this.offset = stream.tell();
   this.value = stream.readInt32();
   this.length = stream.tell() - this.offset;
 };
 
-});
+Descriptor['long'].prototype.toObject = function() {
+  return this.value;
+};

@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.iOpa');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['iOpa'] = function() {
+AdditionalLayerInfo['iOpa'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,9 +13,9 @@ PSD.AdditionalLayerInfo['iOpa'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['iOpa'].prototype.parse = function(stream) {
+AdditionalLayerInfo['iOpa'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   // TODO: おそらく 1 Byte で Opacity を表していて残りはパディングだと思われる
@@ -29,6 +25,3 @@ PSD.AdditionalLayerInfo['iOpa'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});
