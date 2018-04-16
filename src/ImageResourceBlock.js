@@ -139,7 +139,13 @@ ImageResourceBlock['1050'].prototype.parse = function(stream) {
     var sliceDataArray = this.descriptor.item[2].data.item;
     this.slices = sliceDataArray.map(function(sliceData) {
       var attrs = sliceData.data.value.item;
-      var bounds = attrs[4].data.value.item;
+      for (var i=0; i<attrs.length; i++) {
+        if (attrs[i].key === "bounds") {
+          var bounds = attrs[i].data.value.item;
+          break;
+        }
+      }
+
       return {
         origin: attrs[2].data.enum,
         bounds: {
