@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.tdta');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['tdta'] = function() {
+Descriptor['tdta'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,9 +13,9 @@ PSD.Descriptor['tdta'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['tdta'].prototype.parse = function(stream) {
+Descriptor['tdta'].prototype.parse = function(stream) {
   /** @type {number} */
   var length;
 
@@ -31,5 +27,6 @@ PSD.Descriptor['tdta'].prototype.parse = function(stream) {
   this.length = stream.tell() - this.offset;
 };
 
-
-});
+Descriptor['tdta'].prototype.toObject = function() {
+  return this.data;
+}

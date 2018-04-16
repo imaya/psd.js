@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.ObAr');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['ObAr'] = function() {
+Descriptor['ObAr'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -15,12 +11,12 @@ PSD.Descriptor['ObAr'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['ObAr'].prototype.parse = function(stream) {
+Descriptor['ObAr'].prototype.parse = function(stream) {
   /** @type {number} */
   var length;
-  /** @type {Array.<PSD.Descriptor>} */
+  /** @type {Array.<Descriptor>} */
   var item;
   /** @type {number} */
   var i;
@@ -29,10 +25,7 @@ PSD.Descriptor['ObAr'].prototype.parse = function(stream) {
 
   this.offset = stream.tell();
 
-  goog.global.console.warn('OSType key not implemented (undocumented): ObAr(ObjectArray?)');
+  console.log('OSType key not implemented (undocumented): ObAr(ObjectArray?)');
 
   this.length = stream.tell() - this.offset;
 };
-
-
-});

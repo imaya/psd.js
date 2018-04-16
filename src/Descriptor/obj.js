@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.obj');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['obj '] = function() {
+Descriptor['obj '] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -19,16 +15,16 @@ PSD.Descriptor['obj '] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['obj '].prototype.parse = function(stream) {
+Descriptor['obj '].prototype.parse = function(stream) {
   /** @type {number} */
   var items;
   /** @type {string} */
   var key;
   /** @type {string} */
   var type;
-  /** @type {!{parse: function(PSD.StreamReader)}} */
+  /** @type {!{parse: function(StreamReader)}} */
   var data;
   /** @type {number} */
   var i;
@@ -39,14 +35,14 @@ PSD.Descriptor['obj '].prototype.parse = function(stream) {
   items = this.items = stream.readUint32();
   for (i = 0; i < items; ++i) {
     key = stream.readString(4);
-    type = PSD.Descriptor['obj '].Table[key];
+    type = Descriptor['obj '].Table[key];
 
-    if (typeof PSD.Descriptor[type] !== 'function') {
-      goog.global.console.error('OSType Key not implemented:', type);
+    if (typeof Descriptor[type] !== 'function') {
+      console.log('OSType Key not implemented:', type);
       return;
     }
 
-    data = new (PSD.Descriptor[type])();
+    data = new (Descriptor[type])();
     data.parse(stream);
 
     this.item.push({key: key, data: data});
@@ -55,7 +51,7 @@ PSD.Descriptor['obj '].prototype.parse = function(stream) {
   this.length = stream.tell() - this.offset;
 };
 
-PSD.Descriptor['obj '].Table = {
+Descriptor['obj '].Table = {
   'prop': 'prop',
   'Clss': 'type',
   'Enmr': 'enum',
@@ -65,4 +61,8 @@ PSD.Descriptor['obj '].Table = {
   'name': 'TEXT'
 };
 
-});
+Descriptor['obj '].prototype.toObject = function() {
+  return this.item.map(function(item) {
+    return this.item.data.toObject ? this.item.data.toObject() : this.item.data
+  });
+};

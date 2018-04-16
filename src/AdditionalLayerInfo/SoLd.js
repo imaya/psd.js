@@ -1,13 +1,10 @@
-goog.provide('PSD.AdditionalLayerInfo.SoLd');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['SoLd'] = function() {
+AdditionalLayerInfo['SoLd'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -18,14 +15,14 @@ PSD.AdditionalLayerInfo['SoLd'] = function() {
   this.version;
   /** @type {number} */
   this.descriptorVersion;
-  /** @type {PSD.Descriptor} */
+  /** @type {Descriptor} */
   this.descriptor;
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['SoLd'].prototype.parse = function(stream) {
+AdditionalLayerInfo['SoLd'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   this.identifier = stream.readString(4);
@@ -35,11 +32,8 @@ PSD.AdditionalLayerInfo['SoLd'].prototype.parse = function(stream) {
 
   this.version = stream.readUint32();
   this.descriptorVersion = stream.readInt32();
-  this.descriptor = new PSD.Descriptor();
+  this.descriptor = new Descriptor();
   this.descriptor.parse(stream);
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

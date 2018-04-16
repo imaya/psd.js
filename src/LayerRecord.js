@@ -1,16 +1,12 @@
-goog.provide('PSD.LayerRecord');
-
-goog.require('PSD.StreamReader');
-goog.require('PSD.AdditionalLayerInfo');
-goog.require('PSD.LayerMaskData');
-goog.require('PSD.LayerBlendingRanges');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var AdditionalLayerInfo = require('./AdditionalLayerInfo');
+var LayerMaskData = require('./LayerMaskData');
+var LayerBlendingRanges = require('./LayerBlendingRanges');
 
 /**
  * @constructor
  */
-PSD.LayerRecord = function() {
+LayerRecord = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -39,26 +35,26 @@ PSD.LayerRecord = function() {
   this.filter;
   /** @type {string} */
   this.name;
-  /** @type {PSD.LayerMaskData} */
+  /** @type {LayerMaskData} */
   this.layerMaskData;
-  /** @type {PSD.LayerBlendingRanges} */
+  /** @type {LayerBlendingRanges} */
   this.blendingRanges;
-  /** @type {Array.<PSD.AdditionalLayerInfo>} */
+  /** @type {Array.<AdditionalLayerInfo>} */
   this.additionalLayerInfo;
 };
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.Header} header
+ * @param {StreamReader} stream
+ * @param {Header} header
  */
-PSD.LayerRecord.prototype.parse = function(stream, header) {
+LayerRecord.prototype.parse = function(stream, header) {
   /** @type {number} */
   var pos;
   /** @type {number} */
   var i;
   /** @type {number} */
   var il;
-  /** @type {PSD.AdditionalLayerInfo} */
+  /** @type {AdditionalLayerInfo} */
   var additionalLayerInfo;
 
   this.offset = stream.tell();
@@ -102,11 +98,11 @@ PSD.LayerRecord.prototype.parse = function(stream, header) {
   pos = stream.tell() + this.extraLength;
 
   // layer mask data
-  this.layerMaskData = new PSD.LayerMaskData();
+  this.layerMaskData = new LayerMaskData();
   this.layerMaskData.parse(stream);
 
   // layer blending ranges
-  this.blendingRanges = new PSD.LayerBlendingRanges();
+  this.blendingRanges = new LayerBlendingRanges();
   this.blendingRanges.parse(stream);
 
   // name
@@ -117,7 +113,7 @@ PSD.LayerRecord.prototype.parse = function(stream, header) {
   // additional information
   this.additionalLayerInfo = [];
   while (stream.tell() < pos) {
-    additionalLayerInfo = new PSD.AdditionalLayerInfo();
+    additionalLayerInfo = new AdditionalLayerInfo();
     additionalLayerInfo.parse(stream, header);
     this.additionalLayerInfo.push(additionalLayerInfo);
   }
@@ -125,5 +121,4 @@ PSD.LayerRecord.prototype.parse = function(stream, header) {
   this.length = stream.tell() - this.offset;
 };
 
-// end of scope
-});
+module.exports = LayerRecord;

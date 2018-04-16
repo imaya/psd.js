@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.lspf');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['lspf'] = function() {
+AdditionalLayerInfo['lspf'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -18,13 +14,10 @@ PSD.AdditionalLayerInfo['lspf'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['lspf'].prototype.parse = function(stream) {
+AdditionalLayerInfo['lspf'].prototype.parse = function(stream) {
   this.offset = stream.tell();
   this.flags = stream.readUint32();
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

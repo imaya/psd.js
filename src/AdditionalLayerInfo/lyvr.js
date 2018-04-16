@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.lyvr');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo')
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['lyvr'] = function() {
+AdditionalLayerInfo['lyvr'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,15 +13,12 @@ PSD.AdditionalLayerInfo['lyvr'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['lyvr'].prototype.parse = function(stream) {
+AdditionalLayerInfo['lyvr'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   this.version = stream.readUint32();
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

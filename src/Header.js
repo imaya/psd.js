@@ -1,13 +1,9 @@
-goog.provide('PSD.Header');
-
-goog.require('PSD.StreamReader');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
 
 /**
  * @constructor
  */
-PSD.Header = function() {
+var Header = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -26,14 +22,14 @@ PSD.Header = function() {
   this.columns;
   /** @type {number} */
   this.depth;
-  /** @type {PSD.ColorMode} */
+  /** @type {ColorMode} */
   this.colorMode;
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Header.prototype.parse = function(stream) {
+Header.prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   // signature
@@ -49,11 +45,10 @@ PSD.Header.prototype.parse = function(stream) {
   this.columns = stream.readUint32();
   this.depth = stream.readUint16();
   this.colorMode =
-    /** @type {PSD.ColorMode} */
+    /** @type {ColorMode} */
     stream.readUint16();
 
   this.length = stream.tell() - this.offset;
 };
 
-// end of scope
-});
+module.exports = Header;

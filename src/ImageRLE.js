@@ -1,28 +1,24 @@
-goog.provide('PSD.ImageRLE');
+var util = require('util');
 
-goog.require('PSD.StreamReader');
-goog.require('PSD.Header');
-goog.require('PSD.Image');
-
-goog.scope(function() {
+var StreamReader = require('./StreamReader');
+var Header = require('./Header');
+var Image = require('./Image');
 
 /**
  * @constructor
- * @extends {PSD.Image}
+ * @extends {Image}
  */
-PSD.ImageRLE = function() {
-  goog.base(this);
-
+ImageRLE = function() {
   /** @type {Array.<number>} */
   this.lineLength;
 };
-goog.inherits(PSD.ImageRLE, PSD.Image);
+util.inherits(ImageRLE, Image);
 
 /**
- * @param {PSD.StreamReader} stream
- * @param {PSD.Header} header
+ * @param {StreamReader} stream
+ * @param {Header} header
  */
-PSD.ImageRLE.prototype.parse = function(stream, header) {
+ImageRLE.prototype.parse = function(stream, header) {
   /** @type {number} */
   var i;
   /** @type {Array} */
@@ -69,5 +65,4 @@ PSD.ImageRLE.prototype.parse = function(stream, header) {
   }
 };
 
-  // end of scope
-});
+module.exports = ImageRLE;

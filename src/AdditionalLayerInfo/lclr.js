@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.lclr');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['lclr'] = function() {
+AdditionalLayerInfo['lclr'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -18,9 +14,9 @@ PSD.AdditionalLayerInfo['lclr'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['lclr'].prototype.parse = function(stream) {
+AdditionalLayerInfo['lclr'].prototype.parse = function(stream) {
   this.offset = stream.tell();
   this.color = [
     stream.readUint32(),
@@ -28,6 +24,3 @@ PSD.AdditionalLayerInfo['lclr'].prototype.parse = function(stream) {
   ];
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.luni');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['luni'] = function() {
+AdditionalLayerInfo['luni'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,9 +13,9 @@ PSD.AdditionalLayerInfo['luni'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['luni'].prototype.parse = function(stream) {
+AdditionalLayerInfo['luni'].prototype.parse = function(stream) {
   /** @type {number} */
   var length;
 
@@ -34,7 +30,3 @@ PSD.AdditionalLayerInfo['luni'].prototype.parse = function(stream) {
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});
-

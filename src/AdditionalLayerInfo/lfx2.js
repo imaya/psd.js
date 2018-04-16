@@ -1,13 +1,10 @@
-goog.provide('PSD.AdditionalLayerInfo.lfx2');
-
-goog.require('PSD.AdditionalLayerInfo');
-
-goog.scope(function() {
+var AdditionalLayerInfo = require('../AdditionalLayerInfo');
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo['lfx2'] = function() {
+AdditionalLayerInfo['lfx2'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -19,18 +16,15 @@ PSD.AdditionalLayerInfo['lfx2'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo['lfx2'].prototype.parse = function(stream) {
+AdditionalLayerInfo['lfx2'].prototype.parse = function(stream) {
   this.offset = stream.tell();
 
   this.version = stream.readUint32();
   this.descriptorVersion = stream.readUint32();
-  this.descriptor = new PSD.Descriptor();
+  this.descriptor = new Descriptor();
   this.descriptor.parse(stream);
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

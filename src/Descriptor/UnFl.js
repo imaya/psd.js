@@ -1,13 +1,9 @@
-goog.provide('PSD.Descriptor.UnFl');
-
-goog.require('PSD.Descriptor');
-
-goog.scope(function() {
+var Descriptor = require('../Descriptor');
 
 /**
  * @constructor
  */
-PSD.Descriptor['UnFl'] = function() {
+Descriptor['UnFl'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -17,9 +13,9 @@ PSD.Descriptor['UnFl'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.Descriptor['UnFl'].prototype.parse = function(stream) {
+Descriptor['UnFl'].prototype.parse = function(stream) {
   /** @type {Array.<number>} */
   var value = this.value = [];
   /** @type {number} */
@@ -38,4 +34,8 @@ PSD.Descriptor['UnFl'].prototype.parse = function(stream) {
   this.length = stream.tell() - this.offset;
 };
 
-});
+Descriptor['UnFl'].prototype.toObject = function() {
+  var obj = {};
+  obj[this.key] = this.value;
+  return obj;
+};

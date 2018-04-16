@@ -1,13 +1,9 @@
-goog.provide('PSD.AdditionalLayerInfo.EffectsLayer.oglw');
-
-goog.require('PSD.AdditionalLayerInfo.EffectsLayer');
-
-goog.scope(function() {
+var EffectsLayer = require('../EffectsLayer');
 
 /**
  * @constructor
  */
-PSD.AdditionalLayerInfo.EffectsLayer['oglw'] = function() {
+AdditionalLayerInfo.EffectsLayer['oglw'] = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -35,9 +31,9 @@ PSD.AdditionalLayerInfo.EffectsLayer['oglw'] = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.AdditionalLayerInfo.EffectsLayer['oglw'].prototype.parse = function(stream) {
+AdditionalLayerInfo.EffectsLayer['oglw'].prototype.parse = function(stream) {
   this.offset = stream.tell();
   this.size = stream.readUint32();
   this.version = stream.readUint32();
@@ -67,6 +63,3 @@ PSD.AdditionalLayerInfo.EffectsLayer['oglw'].prototype.parse = function(stream) 
 
   this.length = stream.tell() - this.offset;
 };
-
-// end of scope
-});

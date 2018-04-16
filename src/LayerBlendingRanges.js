@@ -1,11 +1,7 @@
-goog.provide('PSD.LayerBlendingRanges');
-
-goog.scope(function() {
-
 /**
  * @constructor
  */
-PSD.LayerBlendingRanges = function() {
+var LayerBlendingRanges = function() {
   /** @type {number} */
   this.offset;
   /** @type {number} */
@@ -21,9 +17,9 @@ PSD.LayerBlendingRanges = function() {
 };
 
 /**
- * @param {PSD.StreamReader} stream
+ * @param {StreamReader} stream
  */
-PSD.LayerBlendingRanges.prototype.parse = function(stream) {
+LayerBlendingRanges.prototype.parse = function(stream) {
   /** @type {number} */
   var next;
 
@@ -31,7 +27,7 @@ PSD.LayerBlendingRanges.prototype.parse = function(stream) {
   this.length = stream.readUint32() + 4;
 
   if (this.length === 4) {
-    window.console.log("skip: layer blending ranges(empty body)");
+    console.log("skip: layer blending ranges(empty body)");
     return;
   }
 
@@ -51,5 +47,4 @@ PSD.LayerBlendingRanges.prototype.parse = function(stream) {
   }
 };
 
-// end of scope
-});
+module.exports = LayerBlendingRanges;
